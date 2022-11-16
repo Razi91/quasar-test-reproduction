@@ -40,29 +40,33 @@ export default defineComponent({
     invert: { type: Boolean, default: false },
   },
   emits: ['update:modelValue'],
-  setup(props, ctx) {
-    const icon = computed(() => {
-      if (props.modelValue === true) {
-        return props.iconTrue;
+  computed: {
+    icon() {
+      if (this.modelValue === true) {
+        return this.iconTrue;
       }
-      if (props.tristate) {
-        if (props.modelValue !== false) {
-          return props.iconNull;
+      if (this.tristate) {
+        if (this.modelValue !== false) {
+          return this.iconNull;
         }
       }
-      return props.iconFalse;
-    });
+      return this.iconFalse;
+    },
+  },
+  methods: {
+    switchState() {
+      if (this.modelValue == true) {
+        this.$emit('update:modelValue', false);
+      } else if (this.modelValue == false) {
+        this.$emit('update:modelValue', this.tristate ? null : true);
+      } else {
+        this.$emit('update:modelValue', true);
+      }
+    },
+  },
+  setup() {
     return {
-      icon,
-      switchState: () => {
-        if (props.modelValue == true) {
-          ctx.emit('update:modelValue', false);
-        } else if (props.modelValue == false) {
-          ctx.emit('update:modelValue', props.tristate ? null : true);
-        } else {
-          ctx.emit('update:modelValue', true);
-        }
-      },
+      hello: 'hello',
     };
   },
 });
