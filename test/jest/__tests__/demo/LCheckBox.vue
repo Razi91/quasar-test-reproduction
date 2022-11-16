@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{ $t('label.button') }}
     <q-btn
       data-cy="LCheckboxIcon.btn"
       :size="size"
